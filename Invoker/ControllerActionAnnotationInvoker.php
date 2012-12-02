@@ -23,20 +23,13 @@ class ControllerActionAnnotationInvoker extends AnnotationInvoker
 		$annotation_engine->readAnnotationsFromClass($controller);
 		
 		$this->annotations = $annotation_engine->annotationsForMethod($controller->request->action);
-		
-		foreach($this->annotations as $annotation)
-		{
-			if(!$annotation instanceof ControllerActionAnnotation)
-			{
-				throw new InvalidArgumentException("Annotation $annotation on %s is not a ControllerActionAnnotation", $this->controller->name);
-			}
-		}
 	}
 	
-	public function invokeEach($annotation)
+	public function invokeAnnotation(ControllerActionAnnotation $annotation)
 	{
 		$annotation->invoke($this->controller);
 	}
+	
 	
 	
 }

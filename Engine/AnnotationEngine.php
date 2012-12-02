@@ -15,5 +15,3 @@ interface AnnotationEngine
 	
 	public function annotationsForProperty($property_name);
 }
-
-?>

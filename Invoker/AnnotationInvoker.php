@@ -20,15 +20,15 @@ abstract class AnnotationInvoker
 		return new AddendumAnnotationEngine();
 	}
 	
-	public function invokeAnnotations()
+	public function invokeAnnotations(AnnotationFilter $filter)
 	{
-		foreach($this->annotations as $annotation)
+		foreach($filter->apply($this->annotations) as $annotation)
 		{
-			$this->invokeEach($annotation);
+				$this->invokeAnnotation($annotation);
 		}
 	}
 	
-	protected function invokeEach(Annotation $annotation);
+	protected function invokeAnnotation(Annotation $annotation);
 }
 
 ?>
