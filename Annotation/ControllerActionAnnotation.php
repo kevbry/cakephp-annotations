@@ -15,8 +15,10 @@ abstract class ControllerActionAnnotation extends Annotation
 	public $value;
 	public $stage=null;
 	
-	public function invoke(Controller $controller);
+	abstract public function invoke(Controller $controller);
 	
+	
+	//create an interface for this
 	public function runForStage($stage)
 	{
 		if(is_null($this->stage))

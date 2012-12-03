@@ -1,4 +1,7 @@
 <?php
+
+App::uses("AddendumAnnotationEngine", "Annotations.Engine");
+
 /**
  * Description of AnnotationInvoker
  *
@@ -24,11 +27,11 @@ abstract class AnnotationInvoker
 	{
 		foreach($filter->apply($this->annotations) as $annotation)
 		{
-				$this->invokeAnnotation($annotation);
+			$this->invokeAnnotation($annotation);
 		}
 	}
 	
-	protected function invokeAnnotation(Annotation $annotation);
+	abstract protected function invokeAnnotation(Annotation $annotation);
 }
 
 ?>

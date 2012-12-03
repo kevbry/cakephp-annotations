@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+App::uses("AnnotationInvoker", "Annotations.Invoker");
 
 /**
  * Description of ControllerActionAnnotationInvoker
@@ -16,7 +13,6 @@ class ControllerActionAnnotationInvoker extends AnnotationInvoker
 	
 	public function __construct($controller)
 	{
-		parent::construct();
 		$this->controller = $controller;
 		$annotation_engine = $this->loadAnnotationEngine();
 		
@@ -25,7 +21,8 @@ class ControllerActionAnnotationInvoker extends AnnotationInvoker
 		$this->annotations = $annotation_engine->annotationsForMethod($controller->request->action);
 	}
 	
-	public function invokeAnnotation(ControllerActionAnnotation $annotation)
+	//Should be ControllerActionAnnotation... dammit php
+	protected function invokeAnnotation(Annotation $annotation)
 	{
 		$annotation->invoke($this->controller);
 	}

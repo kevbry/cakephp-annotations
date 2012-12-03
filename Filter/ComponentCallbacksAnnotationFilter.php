@@ -1,4 +1,5 @@
 <?php
+App::uses("AnnotationFilter", "Annotations.Filter");
 
 /*
  * To change this template, choose Tools | Templates
@@ -12,8 +13,14 @@
  */
 class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 {
+	const STAGE_INITIALIZE="initialize";
+	const STAGE_STARTUP="startup";
+	const STAGE_BEFORERENDER="beforeRender";
+	const STAGE_SHUTDOWN="shutdown";
+	const STAGE_BEFOREREDIRECT="beforeRedirect";
+	
 	protected $stage;
-	public function __construct($stage="initialize")
+	public function __construct($stage=self::STAGE_INITIALIZE)
 	{
 		$this->stage = $stage;
 	}
@@ -27,11 +34,12 @@ class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 		$passed = array();
 		foreach($annotations as $annotation)
 		{
-			if($annotation instanceof ControllerActionAnnotation && $annotation->runForStage($stage))
+			if($annotation instanceof ControllerActionAnnotation && $annotation->runForStage($this->stage))
 			{
 				$passed[] = $annotation;
 			}
 		}
+		return $passed;
 	}
 }
 

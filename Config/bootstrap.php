@@ -1,6 +1,11 @@
 <?php
 
-
+App::build(array(
+	'Annotation'=>'%s'.'Annotation'.DS,
+	'Engine'=>'%s'.'Engine'.DS,
+	'Filter'=>'%s'.'Filter'.DS,
+	'Invoker'=>'%s'.'Invoker'.DS
+), App::REGISTER);
 
 /**
 

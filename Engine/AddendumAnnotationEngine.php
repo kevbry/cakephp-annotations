@@ -1,5 +1,6 @@
 <?php
 App::import("Vendor", "Annotations.addendum/annotations");
+App::uses("AnnotationEngine", "Annotations.Engine");
 
 /**
  * Annotation engine using Addendum as a back-end.
@@ -22,7 +23,7 @@ class AddendumAnnotationEngine implements AnnotationEngine
 	
 	public function annotationsForMethod($method)
 	{
-		$reflection_method = ReflectionAnnotatedMethod($this->class, $method);
+		$reflection_method = new ReflectionAnnotatedMethod($this->class, $method);
 		return $reflection_method->getAllAnnotations();
 	}
 	
