@@ -31,7 +31,7 @@ abstract class AnnotationInvoker
 		}
 	}
 	
-	abstract protected function invokeAnnotation(Annotation $annotation);
+	abstract protected function invokeAnnotation($annotation);
 }
 
 ?>

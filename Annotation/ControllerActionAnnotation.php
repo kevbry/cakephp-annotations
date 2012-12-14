@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of ControllerActionAnnotation
  *
@@ -13,12 +7,12 @@
 abstract class ControllerActionAnnotation extends Annotation
 {
 	public $value;
-	public $stage=null;
+	public $stage="initialize";
 	
 	abstract public function invoke(Controller $controller);
 	
 	
-	//create an interface for this
+	//create an interface for this and use interface in filter instead of this class
 	public function runForStage($stage)
 	{
 		if(is_null($this->stage))

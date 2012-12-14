@@ -21,8 +21,8 @@ class ControllerActionAnnotationInvoker extends AnnotationInvoker
 		$this->annotations = $annotation_engine->annotationsForMethod($controller->request->action);
 	}
 	
-	//Should be ControllerActionAnnotation... dammit php
-	protected function invokeAnnotation(Annotation $annotation)
+	//Should be ControllerActionAnnotation... 
+	protected function invokeAnnotation($annotation)
 	{
 		$annotation->invoke($this->controller);
 	}
@@ -30,5 +30,3 @@ class ControllerActionAnnotationInvoker extends AnnotationInvoker
 	
 	
 }
-
-?>

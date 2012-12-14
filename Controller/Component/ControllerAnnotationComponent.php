@@ -23,31 +23,26 @@ class ControllerAnnotationComponent extends Component
 	
 	public function initialize(Controller $controller)
 	{
-		debug("In initialize");
 		$this->runAnnotations(ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE);
 	}
 	
 	public function startup(Controller $controller)
 	{
-		debug("In startup");
 		$this->runAnnotations(ComponentCallbacksAnnotationFilter::STAGE_STARTUP);
 	}
 	
 	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true)
 	{
-		debug("In beforeRedirect");
 		$this->runAnnotations(ComponentCallbacksAnnotationFilter::STAGE_BEFOREREDIRECT);
 	}
 	
 	public function beforeRender(Controller $controller)
 	{
-		debug("In beforeRender");
 		$this->runAnnotations(ComponentCallbacksAnnotationFilter::STAGE_BEFORERENDER);
 	}
 	
 	public function shutdown(Controller $controller)
 	{
-		debug("In shutdown");
 		$this->runAnnotations(ComponentCallbacksAnnotationFilter::STAGE_SHUTDOWN);
 	}
 	
