@@ -48,11 +48,8 @@ class ControllerAnnotationComponent extends Component
 	
 	public function runAnnotations($stage)
 	{
-		if(in_array($stage, $this->enable_for_stages))
-		{
-			$filter = new ComponentCallbacksAnnotationFilter($stage);
-			$this->annotation_invoker->invokeAnnotations($filter);
-		}
+		$filter = new ComponentCallbacksAnnotationFilter($stage);
+		$this->annotation_invoker->invokeAnnotations($filter);
 	}
 }
 

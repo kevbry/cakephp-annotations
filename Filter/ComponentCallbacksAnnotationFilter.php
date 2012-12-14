@@ -1,6 +1,6 @@
 <?php
 App::uses("AnnotationFilter", "Annotations.Filter");
-
+App::uses("ComponentCallbacksFilterableAnnotation", "Annotations.Filter");
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -34,7 +34,7 @@ class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 		$passed = array();
 		foreach($annotations as $annotation)
 		{
-			if($annotation instanceof ControllerActionAnnotation && $annotation->runForStage($this->stage))
+			if($annotation instanceof ComponentCallbacksFilterableAnnotation && $annotation->runForStage($this->stage))
 			{
 				$passed[] = $annotation;
 			}

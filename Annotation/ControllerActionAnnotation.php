@@ -1,13 +1,14 @@
 <?php
+App::uses("ControllerCallbacksAnnotationFilter", "Annotations.Filter");
 /**
  * Description of ControllerActionAnnotation
  *
  * @author kevinb
  */
-abstract class ControllerActionAnnotation extends Annotation
+abstract class ControllerActionAnnotation extends Annotation implements ComponentCallbacksFilterableAnnotation
 {
 	public $value;
-	public $stage="initialize";
+	public $stage=ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE;
 	
 	abstract public function invoke(Controller $controller);
 	
