@@ -9,7 +9,7 @@ App::uses("AddendumAnnotationEngine", "Annotations.Engine");
  */
 abstract class AnnotationInvoker
 {	
-	protected $annotations;
+	protected $annotations=array();
 	
 	
 	/**

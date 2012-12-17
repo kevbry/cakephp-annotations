@@ -10,6 +10,10 @@ abstract class ControllerActionAnnotation extends Annotation implements Componen
 	public $value;
 	public $stage=ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE;
 	
+	/**
+	 * Called to run this annotation on an action ($controller->request->action)
+	 * on the given controller
+	 */
 	abstract public function invoke(Controller $controller);
 	
 	

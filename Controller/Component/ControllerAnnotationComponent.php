@@ -12,13 +12,28 @@ class ControllerAnnotationComponent extends Component
 	public $enable_for_stages = array(
 		ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE
 			);
+	
+	public $enabled=true;
+	
 	public $annotation_invoker;
 	
 	public function __construct(\ComponentCollection $collection, $settings = array())
 	{
 		parent::__construct($collection, $settings);
+		$controller=$collection->getController();
+		if(isset($settings['disable']) && $settings['disable'])
+		{
+			$this->enabled=false;
+		}
+		if(isset($controller->disable_annotations) && $controller->disable_annotations)
+		{
+			$this->enabled=false;
+		}
+		if($this->enabled)
+		{
+			$this->annotation_invoker = new ControllerActionAnnotationInvoker($controller);	
+		}
 		
-		$this->annotation_invoker = new ControllerActionAnnotationInvoker($collection->getController());
 	}
 	
 	public function initialize(Controller $controller)
@@ -48,8 +63,11 @@ class ControllerAnnotationComponent extends Component
 	
 	public function runAnnotations($stage)
 	{
-		$filter = new ComponentCallbacksAnnotationFilter($stage);
-		$this->annotation_invoker->invokeAnnotations($filter);
+		if($this->enabled)
+		{
+			$filter = new ComponentCallbacksAnnotationFilter($stage);
+			$this->annotation_invoker->invokeAnnotations($filter);
+		}
 	}
 }
 
