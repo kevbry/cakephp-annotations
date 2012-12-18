@@ -1,19 +1,19 @@
 <?php
 /**
- * Description of AnnotationComponent
+ * Component to allow Annotation parsing and invocation at points in the controller lifecycle
  *
- * @author kevinb
+ * @author kevbry
  */
-App::uses('ControllerActionAnnotationInvoker', 'Annotations.Invoker');
-App::uses("ComponentCallbacksAnnotationFilter", "Annotations.Filter");
+App::uses('ControllerActionAnnotationInvoker', 'Invoker');
+App::uses('ComponentCallbacksAnnotationFilter', 'Filter');
 
 class ControllerAnnotationComponent extends Component
-{
-	public $enable_for_stages = array(
-		ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE
-			);
-	
+{	
 	public $enabled=true;
+	
+	public $engine=null;
+	
+	private $engine_instance=null;
 	
 	public $annotation_invoker;
 	
@@ -31,7 +31,13 @@ class ControllerAnnotationComponent extends Component
 		}
 		if($this->enabled)
 		{
-			$this->annotation_invoker = new ControllerActionAnnotationInvoker($controller);	
+			$annotation_engine = $this->getAnnotationEngine();
+		
+			$annotation_engine->readAnnotationsFromClass($controller);
+		
+			$annotations = $annotation_engine->annotationsForMethod($controller->request->action);
+			
+			$this->annotation_invoker = new ControllerActionAnnotationInvoker($controller, $annotations);	
 		}
 		
 	}
@@ -68,6 +74,27 @@ class ControllerAnnotationComponent extends Component
 			$filter = new ComponentCallbacksAnnotationFilter($stage);
 			$this->annotation_invoker->invokeAnnotations($filter);
 		}
+	}
+	
+	protected function getAnnotationEngine()
+	{
+		if(is_null($this->engine_instance))
+		{
+			if(is_null($this->engine))
+			{
+				$engine_config = Configure::read('Annotations.default_engine');
+				
+				App::uses($engine_config['type'], $engine_config['package']);
+				$this->engine_instance = new $engine_config['type'];
+			}
+			else
+			{
+				App::uses($this->engine, "Engine");
+				$this->engine_instance = new $this->engine;
+			}
+		}
+		return $this->engine_instance;
+		
 	}
 }
 

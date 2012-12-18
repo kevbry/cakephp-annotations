@@ -1,18 +1,42 @@
 <?php
-App::uses("Annotation", "ControllerActionAnnotation");
+App::uses('ControllerActionAnnotation', 'Annotation');
 
 /**
- * Description of ParamConverterAnnotation
+ * @name ParamConverter
+ * 
+ * Fill controller method parameters with useful values
+ * Default value for 'method' is findById
+ * Default value for 'continueOnMissing' is false (throw exception if no object returned)
+ * 
+ * @example  
+ *		'@ParamConverter(parameter='id',method='findById',class='Widget',continue_on_missing=false)'
+ *		public function view($id)
+ *		{ .. }
+ *		On requesting /widgets/view/2
+ *		$id will be filled with the result of calling $controller->Widget->findById(2)
+ *		If no result is returned from calling the specified function, a NotFoundException is thrown
  *
- * @author kevinb
+ * @author kevbry
  */
-class ParamConverterAnnotation extends ControllerActionAnnotation
+class ParamConverter extends ControllerActionAnnotation
 {
 	public $method="findById"; //The name of the method to call to get the object
 	public $parameter=null; //The name of the parameter
 	public $class=null; //The class to call the callback on
-	public $continue_on_missing=false;
+	public $continue_on_missing=false;//Whether to throw an exception if no value is returned
+	public $require_value=true; //Whether to throw an exception if parameter was not provided in URL and no default value is set
 	
+	
+	/**
+	 * 
+	 * @param String $method The name of the method to call on $class (default findById)
+	 * @param String $parameter The name of the method parameter to replace
+	 * @param String $class The name of the controller property to call the method on
+	 * @param boolean $continue_on_missing If true, do not throw an exception if nothing is returned by param conversion (default false)
+	 * @param boolean $require_value Whether to throw an exception if parameter was not provided in URL and no default value is set (default true)
+	 * @throws InvalidArgumentException If the specified method does not exist on $class
+	 * @throws NotFoundException If no results are returned from method call
+	 */
 	public function invoke(Controller $controller)
 	{
 		//Overwrite request parameters with an actual object
@@ -32,6 +56,10 @@ class ParamConverterAnnotation extends ControllerActionAnnotation
 					if($parameter->isDefaultValueAvailable())
 					{
 						$passed_value = $parameter->getDefaultValue();
+					}
+					else if($this->require_value)
+					{
+						throw new InvalidArgumentException("Parameter {$this->parameter} is required");
 					}
 				}
 				else 
@@ -65,6 +93,9 @@ class ParamConverterAnnotation extends ControllerActionAnnotation
 		}
 	}
 	
+	/**
+	 * Only run this Annotation at the startup stage (post-beforeFilter)
+	 */
 	public function runForStage($stage)
 	{
 		if($stage == ComponentCallbacksAnnotationFilter::STAGE_STARTUP)

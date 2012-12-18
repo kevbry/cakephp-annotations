@@ -1,16 +1,13 @@
 <?php
 
 App::build(array(
-	'Annotation'=>'%s'.'Annotation'.DS,
-	'Engine'=>'%s'.'Engine'.DS,
-	'Filter'=>'%s'.'Filter'.DS,
-	'Invoker'=>'%s'.'Invoker'.DS
+	'Annotation'=>array('%s'.'Annotation'.DS, App::pluginPath("Annotations") . 'Annotation' . DS),
+	'Engine'=>array('%s'.'Engine'.DS, App::pluginPath("Annotations") . 'Engine' . DS),
+	'Filter'=>array('%s'.'Filter'.DS, App::pluginPath("Annotations") . 'Filter' . DS),
+	'Invoker'=>array('%s'.'Invoker'.DS, App::pluginPath("Annotations") . 'Invoker' . DS)
 ), App::REGISTER);
 
-/**
-
- * WANT:
-
- * -Read annotations from controller method when it is run
- *	-Run the invoke() method of each annotation, passing in the Controller instance it was attached to
- */
+if(!Configure::read("Annotations.default_engine"))
+{
+	Configure::write("Annotations.default_engine", array("package"=>"Annotations.Engine", "type"=>"AddendumAnnotationEngine"));
+}

@@ -1,28 +1,30 @@
 <?php
 
-App::uses("AddendumAnnotationEngine", "Annotations.Engine");
+App::uses('AnnotationFilter', 'Filter');
 
 /**
- * Description of AnnotationInvoker
+ * Handles invokation of runnable annotations
  *
- * @author kevinb
+ * @author kevbry
  */
 abstract class AnnotationInvoker
 {	
 	protected $annotations=array();
-	
+	protected $engine;
 	
 	/**
 	 * 
-	 * @return \AnnotationEngine
+	 * @return AnnotationEngine
 	 */
-	public function loadAnnotationEngine()
+	public function getAnnotationEngine()
 	{
-		//Read the requested engine from config
-		
-		return new AddendumAnnotationEngine();
+		return $this->engine;
 	}
 	
+	/**
+	 * 
+	 * @param AnnotationFilter $filter Filter to apply to reduce the set of annotations to run
+	 */
 	public function invokeAnnotations(AnnotationFilter $filter)
 	{
 		foreach($filter->apply($this->annotations) as $annotation)
@@ -31,7 +33,9 @@ abstract class AnnotationInvoker
 		}
 	}
 	
+	/**
+	 * Run a given annotation in the manner specific to a given annotation type
+	 */
 	abstract protected function invokeAnnotation($annotation);
 }
 
-?>

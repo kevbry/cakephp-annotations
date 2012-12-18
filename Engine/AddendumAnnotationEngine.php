@@ -1,12 +1,12 @@
 <?php
-App::import("Vendor", "Annotations.addendum/annotations");
-App::uses("AnnotationEngine", "Annotations.Engine");
+App::import('Vendor', 'Annotations.addendum/annotations');
+App::uses('AnnotationEngine', 'Engine');
 
 /**
  * Annotation engine using Addendum as a back-end.
  * Annotation class is provided by addendum include
  *
- * @author kevinb
+ * @author kevbry
  */
 class AddendumAnnotationEngine implements AnnotationEngine
 {
@@ -31,6 +31,14 @@ class AddendumAnnotationEngine implements AnnotationEngine
 	{
 		return null;
 	}
+}
+
+/**
+ * Addendum Annotation class provides the required behaviour
+ */
+class CakeAnnotation extends Annotation
+{
+	public $value;
 }
 
 ?>

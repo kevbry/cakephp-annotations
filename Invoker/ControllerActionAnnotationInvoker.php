@@ -1,32 +1,29 @@
 <?php
 
-App::uses("AnnotationInvoker", "Annotations.Invoker");
+App::uses('AnnotationInvoker', 'Invoker');
 
 /**
- * Description of ControllerActionAnnotationInvoker
+ * Invoker for executing annotation actions on the current request's controller action
  *
- * @author kevinb
+ * @author kevbry
  */
 class ControllerActionAnnotationInvoker extends AnnotationInvoker
 {
 	protected $controller;
+	protected $annotations;
 	
-	public function __construct($controller)
+	public function __construct($controller, $annotations)
 	{
 		$this->controller = $controller;
-		$annotation_engine = $this->loadAnnotationEngine();
-		
-		$annotation_engine->readAnnotationsFromClass($controller);
-		
-		$this->annotations = $annotation_engine->annotationsForMethod($controller->request->action);
+		$this->annotations = $annotations;
 	}
 	
-	//Should be ControllerActionAnnotation... 
+	/**
+	 * Handle executing a single annotation
+	 * @param ControllerActionAnnotation $annotation The annotation to run
+	 */
 	protected function invokeAnnotation($annotation)
 	{
 		$annotation->invoke($this->controller);
 	}
-	
-	
-	
 }

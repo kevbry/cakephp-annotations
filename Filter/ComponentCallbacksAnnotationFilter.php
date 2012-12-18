@@ -1,15 +1,11 @@
 <?php
-App::uses("AnnotationFilter", "Annotations.Filter");
-App::uses("ComponentCallbacksFilterableAnnotation", "Annotations.Filter");
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+App::uses('AnnotationFilter', 'Filter');
+App::uses('ComponentCallbacksFilterableAnnotation', 'Filter');
 
 /**
- * Description of BeforeInitializeAnnotationFilter
+ * AnnotationFilter which returns only those annotations marked as being runnable at the given stage
  *
- * @author kevinb
+ * @author kevbry
  */
 class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 {
@@ -20,14 +16,19 @@ class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 	const STAGE_BEFOREREDIRECT="beforeRedirect";
 	
 	protected $stage;
+	
+	/**
+	 * 
+	 * @param type $stage The stage which all returned annotations must have
+	 */
 	public function __construct($stage=self::STAGE_INITIALIZE)
 	{
 		$this->stage = $stage;
 	}
 	
 	/**
-	 * 
-	 * @param type $annotations array of ControllerActionAnnotations
+	 * Returns only those annotations marked as enabled for this stage
+	 * @param array $annotations of ComponentCallbacksFilterableAnnotation
 	 */
 	public function apply($annotations)
 	{
@@ -43,4 +44,3 @@ class ComponentCallbacksAnnotationFilter implements AnnotationFilter
 	}
 }
 
-?>

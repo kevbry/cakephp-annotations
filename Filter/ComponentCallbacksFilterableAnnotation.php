@@ -1,18 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of ComponentCallbacksFilterableAnnotation
+ * Required methods for a stage-filterable annotation
  *
- * @author kevinb
+ * @author kevbry
  */
 interface ComponentCallbacksFilterableAnnotation
 {
 	public function runForStage($stage);
 }
-
-?>

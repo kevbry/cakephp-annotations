@@ -1,9 +1,12 @@
 <?php
 
 /**
- * Description of AbstractAnnotationEngine
+ * Base AnnotationEngine class. Annotation Engine subclasses must provide a 
+ *	CakeAnnotation base class with the following properties:
+ *		-Single-valued annotations should have their $value property set to the single argument's value
+ *		-Multi-valued annotations should have the property with a matching name set to the value of that argument
  *
- * @author kevinb
+ * @author kevbry
  */
 interface AnnotationEngine
 {

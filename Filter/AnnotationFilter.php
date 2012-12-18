@@ -1,18 +1,15 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Filter
+ * Base class for annotation filtering
  *
- * @author kevinb
+ * @author kevbry
  */
 interface AnnotationFilter
 {
+	/**
+	 * Filter the list of annotations, returning an array of thos which match
+	 * @param array $annotations
+	 */
 	public function apply($annotations);
 }
 
-?>

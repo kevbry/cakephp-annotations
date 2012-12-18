@@ -1,13 +1,18 @@
 <?php
-App::uses("ControllerCallbacksAnnotationFilter", "Annotations.Filter");
+App::uses('ControllerCallbacksAnnotationFilter', 'Filter');
+App::uses('CakeAnnotation', 'Annotation');
+App::uses('ComponentCallbacksFilterableAnnotation', 'Filter');
 /**
- * Description of ControllerActionAnnotation
+ * Base class for Controller action annotations
  *
- * @author kevinb
+ * @author kevbry
  */
-abstract class ControllerActionAnnotation extends Annotation implements ComponentCallbacksFilterableAnnotation
+abstract class ControllerActionAnnotation extends CakeAnnotation implements ComponentCallbacksFilterableAnnotation
 {
-	public $value;
+	/**
+	 *
+	 * @var Mixed The component lifecycle stage at which this annotation should run. By default, only at initialize (pre-beforeFilter). May be single or array of stages.
+	 */
 	public $stage=ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE;
 	
 	/**
@@ -17,7 +22,11 @@ abstract class ControllerActionAnnotation extends Annotation implements Componen
 	abstract public function invoke(Controller $controller);
 	
 	
-	//create an interface for this and use interface in filter instead of this class
+	/**
+	 * 
+	 * @param String $stage The current stage in the component lifecycle
+	 * @return boolean True to have this annotation run at the given stage, false to ignore it
+	 */
 	public function runForStage($stage)
 	{
 		if(is_null($this->stage))
