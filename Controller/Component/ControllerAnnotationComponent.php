@@ -25,6 +25,10 @@ class ControllerAnnotationComponent extends Component
 		{
 			$this->enabled=false;
 		}
+		if(isset($settings['engine']))
+		{
+			$this->engine = $settings['engine'];
+		}
 		if(isset($controller->disable_annotations) && $controller->disable_annotations)
 		{
 			$this->enabled=false;
@@ -82,10 +86,10 @@ class ControllerAnnotationComponent extends Component
 		{
 			if(is_null($this->engine))
 			{
-				$engine_config = Configure::read('Annotations.default_engine');
+				$engine = Configure::read('Annotations.default_engine');
 				
-				App::uses($engine_config['type'], $engine_config['package']);
-				$this->engine_instance = new $engine_config['type'];
+				App::uses($engine, 'Engine');
+				$this->engine_instance = new $engine;
 			}
 			else
 			{

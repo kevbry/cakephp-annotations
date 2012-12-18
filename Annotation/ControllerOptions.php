@@ -25,7 +25,7 @@ class ControllerOptions extends ControllerActionAnnotation
 	
 	public function runForStage($stage)
 	{
-		if($stage == ComponentCallbacksAnnotationFilter::STAGE_STARTUP)
+		if($stage == ComponentCallbacksAnnotationFilter::STAGE_INITIALIZE)
 		{
 			return true;
 		}

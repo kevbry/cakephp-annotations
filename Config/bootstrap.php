@@ -9,5 +9,5 @@ App::build(array(
 
 if(!Configure::read("Annotations.default_engine"))
 {
-	Configure::write("Annotations.default_engine", array("package"=>"Annotations.Engine", "type"=>"AddendumAnnotationEngine"));
+	Configure::write("Annotations.default_engine", "AddendumAnnotationEngine");
 }
