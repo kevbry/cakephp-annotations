@@ -49,11 +49,11 @@ ParamConverter is similar to Symfony ParamConverters; it allows you to map an id
 
 Typical usage is as follows:
 
-    App::uses('ParamConverterAnnotation', 'Annotation');
+    App::uses('ParamConverter', 'Annotation');
     //...
 
     /**
-    * @ParamConverterAnnotation(parameter='list_item', class='ListItem', method='findById')
+    * @ParamConverter(parameter='list_item', class='ListItem', method='findById')
     */
     public function view($list_item=1)
     {
